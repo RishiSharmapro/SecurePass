@@ -1,13 +1,8 @@
-# SecurePass - Handling your passwords with care
+# React + Vite
 
-SecurePass is an advanced password management solution meticulously crafted to ensure the utmost security and convenience. Developed using React.js for a seamless user interface, Tailwind CSS for elegant styling, Express.js for robust backend functionality, and MongoDB for secure storage of passwords on the server, SecurePass prioritizes the safety and integrity of your sensitive information.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Key Features:
-- **Centralized Password Management**: Store and organize all your passwords in one secure location.
-- **Enhanced Security**: Utilizes MongoDB for encrypted storage on the server, ensuring protection against unauthorized access.
-- **Local Storage Option**: For heightened security, SecurePass offers the flexibility to store passwords locally, providing an additional layer of safeguarding sensitive data.
-- **User-friendly Interface**: Designed with React.js and Tailwind CSS, SecurePass offers an intuitive and responsive interface for effortless navigation and usage.
-- **Cross-platform Accessibility**: Access your passwords securely from any device, ensuring convenience without compromising on security.
+Currently, two official plugins are available:
 
-
-With SecurePass, you can rest assured knowing your passwords are handled with the highest level of care and security, empowering you to manage your digital credentials confidently and safely.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
