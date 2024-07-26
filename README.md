@@ -10,4 +10,4 @@ SecurePass is an advanced password management solution meticulously crafted to e
 - **Cross-platform Accessibility**: Access your passwords securely from any device, ensuring convenience without compromising on security.
 
 
-With SecurePass, you can rest assured knowing your passwords are handled with the highest level of care and security, empowering you to manage your digital credentials confidently and safely.
+With SecurePass, you can rest assured that your passwords are handled with the highest level of care and security, empowering you to manage your digital credentials confidently and safely.
