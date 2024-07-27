@@ -97,23 +97,23 @@ const Master = () => {
 
         let approval = confirm('Are you sure you want to delete this password?');
         if(approval){
-        let updatedList = passwordList.filter(password => password.id !== id);
-        localStorage.setItem('passwords', JSON.stringify(updatedList));
-        setPasswordList(updatedList);
+            let updatedList = passwordList.filter(password => password.id !== id);
+            localStorage.setItem('passwords', JSON.stringify(updatedList));
+            setPasswordList(updatedList);
+            
+            toast('Password deleted successfully', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                type: "success",
+                theme: "dark",
+                transition: Bounce,
+            });
         }
-
-        toast('Password deleted successfully', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            type: "success",
-            theme: "dark",
-            transition: Bounce,
-        });
-
+        
     }
 
     const copytoClipboard = (text) => {
