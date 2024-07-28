@@ -23,11 +23,11 @@ const Master = () => {
     const handleClick = () => {
         if(pngRef.current.previousElementSibling.type === 'password'){
             pngRef.current.previousElementSibling.type = 'text';
-            pngRef.current.children[0].src = '/src/assets/eyecross.png';
+            pngRef.current.children[0].src = '/eyecross.png';
         }
         else{
             pngRef.current.previousElementSibling.type = 'password';
-            pngRef.current.children[0].src = '/src/assets/eye.png';
+            pngRef.current.children[0].src = '/eye.png';
         }
     }
 
@@ -160,7 +160,7 @@ const Master = () => {
                     <input ref={usernameRef} onChange={handleChange} placeholder="Enter urername" className="rounded-full border border-green-700 w-3/4 px-3 py-1 focus:outline-none" type="text" name="username" value={password.username}/>
                     <div className="flex rounded-full border border-green-700 px-3 w-fit py-1 focus:outline-none bg-white">
                     <input ref={passRef} onChange={handleChange} placeholder="Enter password" className="w-4/5  outline-none " type="password" name="password" value={password.password}/>
-                    <button ref={pngRef} onClick={handleClick} className=" bg-white ml-2 pl-2"><img className="w-5" src="/src/assets/eye.png" alt="eye.png" /></button>
+                    <button ref={pngRef} onClick={handleClick} className=" bg-white ml-2 pl-2"><img className="w-5" src="/eye.png" alt="eye.png" /></button>
                     </div>
                 </div>
                 <button onClick={handleSave} className="border-2 border-green-900 bg-green-500 hover:bg-green-600 active:bg-green-700 rounded-full w-fit mx-auto py-2 px-4 flex items-center justify-center gap-2">

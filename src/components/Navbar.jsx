@@ -22,7 +22,7 @@ const Navbar = () => {
             <Link to="/" className="m-2 p-2">Services</Link>
             <Link to="/" className="m-2 p-2">Contact</Link> */}
             <div className="github w-fit md:pr-40">
-            <Link to='https://github.com/RishiSharmapro/SecurePass' target='_blank'><img src="/src/assets/github.svg" alt="github" /></Link>
+            <Link to='https://github.com/RishiSharmapro/SecurePass' target='_blank'><img src="/github.svg" alt="github" /></Link>
             </div>
             </div>
         </nav>
