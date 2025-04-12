@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
@@ -8,10 +9,10 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
-            <div className="flex items-center justify-center md:justify-start">
+            <Link className="flex items-center justify-center md:justify-start" to={'/'}>
               <span className="text-white text-xl font-semibold">&lt;Secure</span>
               <span className="text-[#4CAF50] text-xl font-semibold">Pass/&gt;</span>
-            </div>
+            </Link>
           </div>
         <div className="text-center text-sm text-gray-400">
           <p>© {new Date().getFullYear()} SecurePass. All rights reserved.</p>

@@ -20,12 +20,12 @@ const Navbar = () => {
       {/* Header */}
       <nav className="bg-[#1a2235] text-white py-4">
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <div className="flex items-center">
+          <Link className="flex items-center" to={'/'}>
             <span className="text-white text-xl font-semibold">&lt;Secure</span>
             <span className="text-[#4CAF50] text-xl font-semibold">
               Pass/&gt;
             </span>
-          </div>
+          </Link>
           <div className="flex space-x-3">
             {isAuthenticated ? (
                 <button

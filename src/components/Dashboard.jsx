@@ -3,7 +3,7 @@ import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { v4 as unique } from "uuid";
 
-const Master = () => {
+const Dashboard = () => {
   const pngRef = React.useRef();
   const urlRef = React.useRef();
   const usernameRef = React.useRef();
@@ -345,4 +345,4 @@ const Master = () => {
   );
 };
 
-export default Master;
+export default Dashboard;

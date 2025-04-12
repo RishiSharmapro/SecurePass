@@ -29,7 +29,7 @@ function App() {
   };
   const handleNavigation = () => {
     if (isAuthenticated) {
-      navigate("/master");
+      navigate("/dashboard");
     } else {
       handleLogin();
     }

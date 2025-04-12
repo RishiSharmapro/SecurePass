@@ -3,7 +3,7 @@ import { useState } from "react";
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Master from "./components/Master";
+import Dashboard from "./components/Dashboard";
 import Footer from "./components/Footer";
 import LandingPage from "./components/LandingPage";
 
@@ -20,11 +20,11 @@ function App() {
       ),
     },
     {
-      path: "/master",
+      path: "/dashboard",
       element: (
         <>
           <Navbar />
-          <Master />
+          <Dashboard />
           <Footer />
         </>
       ),
