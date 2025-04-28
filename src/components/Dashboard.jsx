@@ -2,8 +2,11 @@ import React from "react";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { v4 as unique } from "uuid";
+import { encryptData, decryptData } from "../utils/Encryption";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Dashboard = () => {
+  const { user } = useAuth0();
   const pngRef = React.useRef();
   const urlRef = React.useRef();
   const usernameRef = React.useRef();
@@ -32,15 +35,16 @@ const Dashboard = () => {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
+    // handleChange function to update the state of password
     setPassword({ ...password, [e.target.name]: e.target.value });
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!password.url || !password.username || !password.password) {
       toast("Please fill all the fields", {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -51,17 +55,43 @@ const Dashboard = () => {
       });
       return;
     }
+    // Encrypt the password before saving
+    const encryptedPassword = await encryptData(user.email, password.password);
+    const encryptedPasswordObj = {
+      ...password,
+      password: encryptedPassword,
+    };
+
     let currId = unique();
-    setPasswordList([...passwordList, { ...password, id: currId }]);
+    // checking if the url and username already exists
+    let existingPassword = passwordList.find(
+      (pass) =>
+        pass.url === password.url && pass.username === password.username
+    );
+    if (existingPassword) {
+      toast("Password already exists", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        type: "error",
+        theme: "dark",
+        transition: Bounce,
+      });
+      return;
+    }
+    setPasswordList([...passwordList, { ...encryptedPasswordObj, id: currId }]);
     localStorage.setItem(
       "passwords",
-      JSON.stringify([...passwordList, { ...password, id: currId }])
+      JSON.stringify([...passwordList, { ...encryptedPasswordObj, id: currId }])
     );
     setPassword({ id: "", url: "", username: "", password: "" });
 
     toast("Password saved successfully", {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -78,8 +108,16 @@ const Dashboard = () => {
     // passRef.current.value = '';
   };
 
-  const handleEdit = (id) => {
+  const handleEdit = async (id) => {
     let pass = passwordList.find((password) => password.id === id);
+    // decrypt the password before setting it to the state
+    pass.password = await decryptData(user.email, pass.password);
+    // setPassword({
+    //   id: pass.id,
+    //   url: pass.url,
+    //   username: pass.username,
+    //   password: pass.password,
+    // });
     setPassword(pass);
     setPasswordList(passwordList.filter((password) => password.id !== id));
     //if you are not using controlled components or value attribute in input fields
@@ -106,7 +144,7 @@ const Dashboard = () => {
 
       toast("Password deleted successfully", {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -118,10 +156,10 @@ const Dashboard = () => {
     }
   };
 
-  const copytoClipboard = (text) => {
+  const copytoClipboard = async (text) => {
     toast("Copied to clipboard", {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -130,7 +168,9 @@ const Dashboard = () => {
       theme: "dark",
       transition: Bounce,
     });
-    navigator.clipboard.writeText(text);
+    // decrypt the password before copying
+    const decryptedText = await decryptData(user.email, text);
+    navigator.clipboard.writeText(decryptedText);
   };
 
   return (
