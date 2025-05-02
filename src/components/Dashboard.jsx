@@ -20,7 +20,7 @@ const Dashboard = () => {
   const [passwordList, setPasswordList] = React.useState([]);
 
   const getPasswords = async () => {
-    let response = await fetch('http://localhost:3000');
+    let response = await fetch(process.env.BACKEND_URL);
     let passwords = await response.json();
     if(passwords){
       setPasswordList(passwords);
@@ -97,7 +97,7 @@ const Dashboard = () => {
     //   "passwords",
     //   JSON.stringify([...passwordList, { ...encryptedPasswordObj, id: currId }])
     // );
-    axios.post('http://localhost:3000', { ...encryptedPasswordObj, id: currId });
+    axios.post(process.env.BACKEND_URL, { ...encryptedPasswordObj, id: currId });
     
 
     setPassword({ id: "", url: "", username: "", password: "" });
@@ -124,7 +124,7 @@ const Dashboard = () => {
   const handleEdit = async (id) => {
     let pass = passwordList.find((password) => password.id === id);
     // decrypt the password before setting it to the state
-    axios.delete('http://localhost:3000', pass);
+    axios.delete(process.env.BACKEND_URL, pass);
     pass.password = await decryptData(user.email, pass.password);
     setPassword(pass);
     setPasswordList(passwordList.filter((password) => password.id !== id));
@@ -148,7 +148,7 @@ const Dashboard = () => {
     if (approval) {
       let updatedList = passwordList.filter((password) => password.id !== id);
       let pass = passwordList.filter((password) => password.id == id);
-      axios.delete('http://localhost:3000', pass);
+      axios.delete(process.env.BACKEND_URL, pass);
       // localStorage.setItem("passwords", JSON.stringify(updatedList));
       setPasswordList(updatedList);
 

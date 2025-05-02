@@ -12,7 +12,6 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 const port = process.env.PORT || 3000;
-3000;
 
 let db; // will hold the connected DB reference
 
