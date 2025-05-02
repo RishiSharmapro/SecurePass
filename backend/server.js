@@ -11,7 +11,8 @@ const dbName = 'securePass';
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-const port = 3000;
+const port = process.env.PORT || 3000;
+3000;
 
 let db; // will hold the connected DB reference
 
@@ -61,7 +62,7 @@ async function startServer() {
 
     // Start the Express server
     app.listen(port, () => {
-      console.log(`Server running at http://localhost:${port}`);
+      console.log(`Server running on port:${port}`);
     });
 
   } catch (err) {
