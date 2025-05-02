@@ -1,22 +1,14 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Navbar = () => {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
+  const isSM = window.innerWidth < 640;
 
   return (
     <div>
-      {/* <nav className="flex justify-between items-center h-16 bg-slate-800 text-black relative shadow-sm font-mono" role="navigation ">
-            <div className="pl-16 logo font-bold text-xl text-white flex item-center">
-              <span className='text-green-700'>&lt;</span>
-            Secure
-              <span className='text-green-700'>Pass/&gt;</span>
-            </div>
-            <div className="px-4  text-white">
-            </div>
-        </nav> */}
       {/* Header */}
       <nav className="bg-[#1a2235] text-white py-4">
         <div className="container mx-auto px-4 flex justify-between items-center">
@@ -30,7 +22,7 @@ const Navbar = () => {
             {isAuthenticated ? (
                 <button
                   onClick={() => logout()}
-                  className="px-4  rounded border border-[#4CAF50] text-[#4CAF50] hover:bg-[#4CAF50] hover:text-white transition-colors text-center"
+                  className="px-4 rounded border border-[#4CAF50] text-[#4CAF50] hover:bg-[#4CAF50] hover:text-white transition-colors text-center"
                 >
                   Log Out
                 </button>
@@ -38,15 +30,9 @@ const Navbar = () => {
               <>
                 <button
                   onClick={() => loginWithRedirect()}
-                  className="px-4  rounded border border-[#4CAF50] text-[#4CAF50] hover:bg-[#4CAF50] hover:text-white transition-colors text-center"
+                  className="px-4 rounded border border-[#4CAF50] text-[#4CAF50] hover:bg-[#4CAF50] hover:text-white transition-colors text-center"
                 >
                   Login
-                </button>
-                <button
-                  onClick="/signup"
-                  className="px-4 py-3 rounded bg-[#4CAF50] text-white hover:bg-[#3e8e41] transition-colors"
-                >
-                  Sign Up
                 </button>
               </>
             )}

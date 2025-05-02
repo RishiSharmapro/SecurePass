@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { v4 as unique } from "uuid";
 import { encryptData, decryptData } from "../utils/Encryption";
 import { useAuth0 } from "@auth0/auth0-react";
+import axios from "axios";
 
 const Dashboard = () => {
   const { user } = useAuth0();
@@ -18,11 +19,20 @@ const Dashboard = () => {
   });
   const [passwordList, setPasswordList] = React.useState([]);
 
-  React.useEffect(() => {
-    let passwords = localStorage.getItem("passwords");
-    if (passwords) {
-      setPasswordList(JSON.parse(passwords));
+  const getPasswords = async () => {
+    let response = await fetch('http://localhost:3000');
+    let passwords = await response.json();
+    if(passwords){
+      setPasswordList(passwords);
     }
+  }
+
+  React.useEffect(() => {
+    // let passwords = localStorage.getItem("passwords");
+    // if (passwords) {
+    //   setPasswordList(JSON.parse(passwords));
+    // }
+    getPasswords();
   }, []);
 
   const handleClick = () => {
@@ -83,10 +93,13 @@ const Dashboard = () => {
       return;
     }
     setPasswordList([...passwordList, { ...encryptedPasswordObj, id: currId }]);
-    localStorage.setItem(
-      "passwords",
-      JSON.stringify([...passwordList, { ...encryptedPasswordObj, id: currId }])
-    );
+    // localStorage.setItem(
+    //   "passwords",
+    //   JSON.stringify([...passwordList, { ...encryptedPasswordObj, id: currId }])
+    // );
+    axios.post('http://localhost:3000', { ...encryptedPasswordObj, id: currId });
+    
+
     setPassword({ id: "", url: "", username: "", password: "" });
 
     toast("Password saved successfully", {
@@ -111,13 +124,8 @@ const Dashboard = () => {
   const handleEdit = async (id) => {
     let pass = passwordList.find((password) => password.id === id);
     // decrypt the password before setting it to the state
+    axios.delete('http://localhost:3000', pass);
     pass.password = await decryptData(user.email, pass.password);
-    // setPassword({
-    //   id: pass.id,
-    //   url: pass.url,
-    //   username: pass.username,
-    //   password: pass.password,
-    // });
     setPassword(pass);
     setPasswordList(passwordList.filter((password) => password.id !== id));
     //if you are not using controlled components or value attribute in input fields
@@ -139,7 +147,9 @@ const Dashboard = () => {
     let approval = confirm("Are you sure you want to delete this password?");
     if (approval) {
       let updatedList = passwordList.filter((password) => password.id !== id);
-      localStorage.setItem("passwords", JSON.stringify(updatedList));
+      let pass = passwordList.filter((password) => password.id == id);
+      axios.delete('http://localhost:3000', pass);
+      // localStorage.setItem("passwords", JSON.stringify(updatedList));
       setPasswordList(updatedList);
 
       toast("Password deleted successfully", {
@@ -156,7 +166,7 @@ const Dashboard = () => {
     }
   };
 
-  const copytoClipboard = async (text) => {
+  const copytoClipboard = async (text, isPass) => {
     toast("Copied to clipboard", {
       position: "top-right",
       autoClose: 1000,
@@ -168,6 +178,10 @@ const Dashboard = () => {
       theme: "dark",
       transition: Bounce,
     });
+    if(isPass === 0) {
+      navigator.clipboard.writeText(text);
+      return;
+    }
     // decrypt the password before copying
     const decryptedText = await decryptData(user.email, text);
     navigator.clipboard.writeText(decryptedText);
@@ -256,7 +270,7 @@ const Dashboard = () => {
               <div className="font-medium ">No passwords to show</div>
             )}
             {passwordList.length !== 0 && (
-              <div className="flex flex-col flex-wrap mx-auto mb-10">
+              <div className="flex flex-col flex-wrap mx-auto mb-10 overflow-scroll overflow-y-clip">
                 <div className="-m-1.5 overflow-x-auto ">
                   <div className="p-1.5 min-w-full inline-block align-middle overflow-scroll">
                     <div className="overflow-scroll max-h-96 border-y-2 ">
@@ -302,7 +316,7 @@ const Dashboard = () => {
                                   <div
                                     className="copy pt-1 px-2"
                                     onClick={() =>
-                                      copytoClipboard(password.url)
+                                      copytoClipboard(password.url, 0)
                                     }
                                   >
                                     <lord-icon
@@ -322,7 +336,7 @@ const Dashboard = () => {
                                   <div
                                     className="copy pt-1 px-2"
                                     onClick={() =>
-                                      copytoClipboard(password.username)
+                                      copytoClipboard(password.username, 0)
                                     }
                                   >
                                     <lord-icon
@@ -342,7 +356,7 @@ const Dashboard = () => {
                                   <div
                                     className="copy pt-1 px-2"
                                     onClick={() =>
-                                      copytoClipboard(password.password)
+                                      copytoClipboard(password.password, 1)
                                     }
                                   >
                                     <lord-icon

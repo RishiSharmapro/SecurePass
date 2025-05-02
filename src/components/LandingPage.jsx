@@ -86,7 +86,7 @@ function App() {
                   </a>
                 </div>
               </div>
-              <div className="md:w-1/2">
+              <div className="md:w-1/2 md:mx-2">
                 <div className="bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto">
                   <div className="text-center mb-6">
                     <span className="text-[#1a2235] text-xl font-semibold">
